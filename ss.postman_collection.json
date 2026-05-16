@@ -1,0 +1,714 @@
+{
+  "info": {
+    "_postman_id": "ad251b44-2507-45b2-b16b-ddd432e95b16",
+    "name": "ss",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53994886",
+    "_collection_link": "https://go.postman.co/collection/53994886-ad251b44-2507-45b2-b16b-ddd432e95b16?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "shopper profile",
+      "item": [
+        {
+          "name": "Shopper Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "body = JSON.parse(pm.response.text());\r",
+                  "pm.environment.set(\"token\", body.data.jwtToken);\r",
+                  "pm.environment.set(\"shopperId\", body.data.userId);\r",
+                  "pm.environment.set(\"zoneId\", body.data.zoneId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"hussainjj@gmail.com\",\r\n  \"password\": \"Navaz@123456\",\r\n  \"role\": \"SHOPPER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/users/login",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Product View Action",
+      "item": [
+        {
+          "name": "Welcome_ Returns all the default products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 7000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ss_url}}/products/alpha?zoneid={{zoneId}}",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "products",
+                "alpha"
+              ],
+              "query": [
+                {
+                  "key": "zoneid",
+                  "value": "{{zoneId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "HOMEPAGE_Returns all the products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 7000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(7000);\r",
+                  "});\r",
+                  "\r",
+                  "body = JSON.parse(pm.response.text());\r",
+                  "pm.environment.set(\"PID\", body.data[0].productId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ss_url}}/products?zoneId={{zoneId}}",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "products"
+              ],
+              "query": [
+                {
+                  "key": "zoneId",
+                  "value": "{{zoneId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper_Cart",
+      "item": [
+        {
+          "name": "AddCart_Add a product to the cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 3000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});\r",
+                  "\r",
+                  "body = JSON.parse(pm.response.text());\r",
+                  "pm.environment.set(\"itemId\", body.data.itemId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": {{PID}},\r\n  \"quantity\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List_Get all the products from the cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 3000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"data\": [\r\n    {\r\n      \"productId\": 53,\r\n      \"quantity\": 3\r\n    }\r\n  ],\r\n  \"message\": \"string\",\r\n  \"statusCode\": 200\r\n}"
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/{{shopperId}}/carts",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UPDATE_Update a product in the cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": 53,\r\n  \"quantity\": 6\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/{{shopperId}}/carts/{{itemId}}",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "carts",
+                "{{itemId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE_Delete a product from the cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{ss_url}}/shoppers/386562/carts/{{PID}}",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "386562",
+                "carts",
+                "{{PID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Wishlist",
+      "item": [
+        {
+          "name": "Add a product to the wishlist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 3000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"productId\": {{PID}},\r\n  \"quantity\": 7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/386562/wishlist",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "386562",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all the products from wishlist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"OK\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ss_url}}/shoppers/386562/wishlist",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "386562",
+                "wishlist"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a product from wishlist",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"No Content\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{ss_url}}/shoppers/386562/wishlist/{{PID}}",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "386562",
+                "wishlist",
+                "{{PID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Address",
+      "item": [
+        {
+          "name": "Add a new address",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "body = JSON.parse(pm.response.text());\r",
+                  "pm.environment.set(\"addressId\", body.data.addressId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"addressId\": 1999,\r\n  \"buildingInfo\": \"no 11\",\r\n  \"city\": \"try\",\r\n  \"country\": \"india\",\r\n  \"landmark\": \"po\",\r\n  \"name\": \"navaz\",\r\n  \"phone\": \"9638527412\",\r\n  \"pincode\": \"560010\",\r\n  \"state\": \"tn\",\r\n  \"streetInfo\": \"anna st\",\r\n  \"type\": \"apt\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/{{shopperId}}/address",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "address"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shopper Order",
+      "item": [
+        {
+          "name": "place order from cart",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Status code name has string\", function () {\r",
+                  "    pm.response.to.have.status(\"Created\");\r",
+                  "});\r",
+                  "pm.test(\"Response time is less than 2000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});\r",
+                  "\r",
+                  "body = JSON.parse(pm.response.text());\r",
+                  "pm.environment.set(\"orderId\", body.data.orderId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"address\": {\r\n    \"addressId\": {{addressId}},\r\n    \"buildingInfo\": \"no 11\",\r\n    \"city\": \"try\",\r\n    \"country\": \"india\",\r\n    \"landmark\": \"po\",\r\n    \"name\": \"navaz\",\r\n    \"phone\": \"9638527412\",\r\n    \"pincode\": \"560010\",\r\n    \"state\": \"tn\",\r\n    \"streetInfo\": \"anna st\",\r\n    \"type\": \"apt\"\r\n  },\r\n  \"paymentMode\": \"COD\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{ss_url}}/shoppers/{{shopperId}}/orders",
+              "host": [
+                "{{ss_url}}"
+              ],
+              "path": [
+                "shoppers",
+                "{{shopperId}}",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

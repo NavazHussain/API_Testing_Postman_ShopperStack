@@ -1,0 +1,71 @@
+{
+  "info": {
+    "_postman_id": "2be225f0-e7c6-4fc1-bc62-a97fd730deec",
+    "name": "Create Profile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53994886",
+    "_collection_link": "https://go.postman.co/collection/53994886-2be225f0-e7c6-4fc1-bc62-a97fd730deec?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Shopper Profile",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "pm.test(\"Status code name has string\", function () {\r",
+              "    pm.response.to.have.status(\"Created\");\r",
+              "});\r",
+              "pm.test(\"Response time is less than 200ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(6000);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"city\": \"chennai\",\r\n  \"country\": \"india\",\r\n  \"email\": \"hussainjj@gmail.com\",\r\n  \"firstName\": \"Navaz\",\r\n  \"gender\": \"MALE\",\r\n  \"lastName\": \"Hussain\",\r\n  \"password\": \"Navaz@123456\",\r\n  \"phone\": 9123456789,\r\n  \"state\": \"tn\",\r\n  \"zoneId\": \"ALPHA\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/shoppers",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "shoppers"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
